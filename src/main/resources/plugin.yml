@@ -1,0 +1,35 @@
+name: UltraLS
+version: '${version}'
+main: me.trouper.ultrals.UltraLS
+api-version: 1.19
+authors: [ TheTrouper ]
+description: The only acceptable dupe plugin.
+website: https://thetrouper.github.io/
+permissions:
+  ultrals.admin:
+    default: op
+    description: Access to give and take hearts from players
+
+commands:
+  ultrals:
+    description: Admin command to edit people's hearts
+    usage: /ultrals
+    permission: ultrals.admin
+    aliases:
+      - lsadmin
+      - adminls
+      - ls
+      - uls
+  deposit:
+    description: put hearts from you healthbar into your bank
+    permission: ultrals.deposit
+    usage: /deposit <int>
+  withdraw:
+    description: put hearts from you bank into your health bar or inventory
+    permission: ultrals.withdraw
+    usage: /withdraw <int> [bank|item]
+  giveheart:
+    description: Give hearts to players
+    permission: ultrals.giveheart
+    usage: /giveheart <player> <int> [from your; bank|bar] [to their; bank|bar]
+
