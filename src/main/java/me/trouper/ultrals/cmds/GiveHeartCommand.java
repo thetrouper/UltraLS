@@ -5,6 +5,7 @@ import io.github.itzispyder.pdk.commands.CommandRegistry;
 import io.github.itzispyder.pdk.commands.CustomCommand;
 import io.github.itzispyder.pdk.commands.completions.CompletionBuilder;
 import io.github.itzispyder.pdk.utils.ServerUtils;
+import me.trouper.ultrals.server.functions.DeathFunctions;
 import me.trouper.ultrals.server.functions.TransferFunctions;
 import me.trouper.ultrals.server.util.Text;
 import org.bukkit.Bukkit;
@@ -23,6 +24,10 @@ public class GiveHeartCommand implements CustomCommand {
             s.sendMessage(Text.prefix("&cYou must provide an online player!&7 Use the /revive command to give hearts to a dead player."));
             return;
         }
+        if (!DeathFunctions.isAlive(r)) {
+            s.sendMessage(Text.prefix("&cYou must provide an alive player!&7 Use the /revive command to give hearts to a dead player."));
+            return;
+        }
         int amount = args.get(1).toInt();
         String to = args.get(2).toString();
         String from = args.get(3).toString();
@@ -36,6 +41,7 @@ public class GiveHeartCommand implements CustomCommand {
         }
         if (to.equals("bank")) {
             TransferFunctions.barToBank(s,r,amount);
+            return;
         }
         TransferFunctions.barToBar(s,r,amount);
 

@@ -77,7 +77,7 @@ public class BankFunctions {
 
     public static void depositItem(Player p, boolean toBank) {
         ItemStack i = p.getInventory().getItemInMainHand();
-
+        if (i.getLore() == null) return;
         if (i.hasItemMeta() && i.getItemMeta().hasCustomModelData() && i.getItemMeta().hasLore() && i.getItemMeta().getCustomModelData() != UltraLS.config.plugin.heartModelData) {
             p.sendMessage(Text.prefix("&cThat item is not a heart!"));
             return;

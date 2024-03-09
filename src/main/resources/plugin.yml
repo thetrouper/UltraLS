@@ -32,4 +32,11 @@ commands:
     description: Give hearts to players
     permission: ultrals.giveheart
     usage: /giveheart <player> <int> [from your; bank|bar] [to their; bank|bar]
-
+    aliases:
+      - gh
+      - givelife
+      - gl
+  revive:
+    description: Revive a player for the cost of a player death
+    permission: ultrals.revive
+    usage: /revive <dead player>

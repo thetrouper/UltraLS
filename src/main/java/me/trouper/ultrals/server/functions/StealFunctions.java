@@ -38,11 +38,11 @@ public class StealFunctions {
         if (vb - UltraLS.config.plugin.heartsFromPlayers <= 0) {
             // Victim does not have any hearts in the bank
             if (defaultBar) {
-                v.sendMessage("Your bank was empty! Hearts will been taken from your bar.");
+                v.sendMessage(Text.prefix("Your bank was empty! Hearts will been taken from your bar."));
                 stealFromBar(v,k,false);
                 return;
             }
-            v.sendMessage("Your bank was empty!");
+            v.sendMessage(Text.prefix("Your bank was empty!"));
             return;
         }
 
@@ -76,17 +76,14 @@ public class StealFunctions {
         if (vh.getBaseValue() - UltraLS.config.plugin.heartsFromPlayers <= UltraLS.config.plugin.minHP && !UltraLS.config.plugin.deathBan && !UltraLS.config.plugin.deathSpectator) {
             // Victim does not have any hearts in their health bar, and the plugin is set to not spectator, or not ban them
             if (defaultBank) {
-                v.sendMessage("You dont have enough hearts in your health bar! Hearts will been taken from your bank.");
+                v.sendMessage("You don't have enough hearts in your health bar! Hearts will been taken from your bank.");
                 stealFromBank(v,k,false);
                 return;
             }
             v.sendMessage("Your health bar does not have enough hearts to be stolen from.");
             return;
-        } else if (vh.getBaseValue() - UltraLS.config.plugin.heartsFromPlayers <= UltraLS.config.plugin.minHP && UltraLS.config.plugin.deathBan) {
-            DeathFunctions.ban(v);
-            return; // Return, because we don't want to make them have negative hearts when they rejoin
-        } else if (vh.getBaseValue() - UltraLS.config.plugin.heartsFromPlayers <= UltraLS.config.plugin.minHP && UltraLS.config.plugin.deathSpectator) {
-            DeathFunctions.spectator(v);
+        } else if (vh.getBaseValue() - UltraLS.config.plugin.heartsFromPlayers <= UltraLS.config.plugin.minHP ) {
+            DeathFunctions.permaKill(v,k);
             return;
         }
 

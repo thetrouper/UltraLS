@@ -11,7 +11,7 @@ public class BankStorage implements JsonSerializable<BankStorage> {
 
     @Override
     public File getFile() {
-        File file = new File("plugins/UltraLS/banks.json");
+        File file = new File("plugins/UltraLS/storage/banks.json");
         file.getParentFile().mkdirs();
         return file;
     }

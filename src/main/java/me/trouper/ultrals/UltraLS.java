@@ -5,10 +5,12 @@ import io.github.itzispyder.pdk.utils.misc.JsonSerializable;
 import me.trouper.ultrals.cmds.*;
 import me.trouper.ultrals.data.BankStorage;
 import me.trouper.ultrals.data.HeartItemStorage;
+import me.trouper.ultrals.data.MiscStorage;
 import me.trouper.ultrals.data.config.Config;
 import me.trouper.ultrals.events.ClickEvent;
 import me.trouper.ultrals.events.DeathEvent;
-import me.trouper.ultrals.events.JoinEvent;
+import me.trouper.ultrals.events.PlayerEvents;
+import me.trouper.ultrals.events.TeleportEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,9 +21,11 @@ public final class UltraLS extends JavaPlugin {
 
     private static UltraLS instance;
     private static final File cfgfile = new File("plugins/UltraLS/main-config.json");
-    private static final File bankfile = new File("plugins/UltraLS/banks.json");
-    private static final File withdrawfile = new File("plugins/UltraLS/heart-item-storage.json");
+    private static final File bankfile = new File("plugins/UltraLS/storage/banks.json");
+    private static final File withdrawfile = new File("plugins/UltraLS/storage/heart-item-storage.json");
+    private static final File miscfile = new File("plugins/UltraLS/storage/misc-storage.json");
     public static Config config = JsonSerializable.load(cfgfile, Config.class, new Config());
+    public static MiscStorage misc = JsonSerializable.load(miscfile, MiscStorage.class, new MiscStorage());
     public static BankStorage bank = JsonSerializable.load(bankfile, BankStorage.class, new BankStorage());
     public static HeartItemStorage hearts = JsonSerializable.load(bankfile, HeartItemStorage.class, new HeartItemStorage());
     public static final Logger log = Bukkit.getLogger();
@@ -59,7 +63,8 @@ public final class UltraLS extends JavaPlugin {
         // Events
         new DeathEvent().register();
         new ClickEvent().register();
-        new JoinEvent().register();
+        new PlayerEvents().register();
+        new TeleportEvent().register();
 
         log.info("""
                 Finished!
