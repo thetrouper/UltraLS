@@ -21,6 +21,11 @@ import java.util.UUID;
 public class BankFunctions {
 
     public static void withdraw(Player p, int amount) {
+        if (amount < 1) {
+            p.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
+
         int bal = UltraLS.bank.balances.get(p.getUniqueId().toString());
         AttributeInstance h = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
@@ -41,6 +46,10 @@ public class BankFunctions {
     }
 
     public static void withdrawItem(Player p, int amount) {
+        if (amount < 1) {
+            p.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
         int bal = UltraLS.bank.balances.get(p.getUniqueId().toString());
 
         if (bal - amount < 0) {
@@ -76,8 +85,12 @@ public class BankFunctions {
     }
 
     public static void depositItem(Player p, boolean toBank) {
+        ServerUtils.verbose("Dep 1");
         ItemStack i = p.getInventory().getItemInMainHand();
         if (i.getLore() == null) return;
+        ServerUtils.verbose("Dep 2");
+        if (!i.getItemMeta().hasDisplayName()) return;
+        ServerUtils.verbose("Dep 4");
         if (i.hasItemMeta() && i.getItemMeta().hasCustomModelData() && i.getItemMeta().hasLore() && i.getItemMeta().getCustomModelData() != UltraLS.config.plugin.heartModelData) {
             p.sendMessage(Text.prefix("&cThat item is not a heart!"));
             return;
@@ -108,19 +121,27 @@ public class BankFunctions {
 
         int amount = UltraLS.hearts.withdrawn.get(typeID.toString());
 
-        p.getInventory().removeItem(i);
-        UltraLS.hearts.withdrawn.remove(typeID.toString());
-        UltraLS.hearts.save();
-
-
         if (toBank) {
-            addToBank(p,amount);
+            if (addToBank(p,amount)) {
+                p.getInventory().removeItem(i);
+                UltraLS.hearts.withdrawn.remove(typeID.toString());
+                UltraLS.hearts.save();
+            }
         } else {
-            addToBar(p,amount);
+            if (addToBar(p,amount)) {
+                p.getInventory().removeItem(i);
+                UltraLS.hearts.withdrawn.remove(typeID.toString());
+                UltraLS.hearts.save();
+            }
         }
     }
 
     public static void depositHeart(Player p, int amount) {
+        if (amount < 1) {
+            p.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
+
         AttributeInstance h = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
         if (h.getBaseValue() - amount < UltraLS.config.plugin.minHP) {
@@ -130,18 +151,23 @@ public class BankFunctions {
             return;
         }
 
-        h.setBaseValue(h.getBaseValue() - amount);
-        addToBank(p,amount);
+        if (addToBank(p,amount)) {
+            h.setBaseValue(h.getBaseValue() - amount);
+        }
     }
 
-    public static void addToBar(Player p, int amount) {
+    public static boolean addToBar(Player p, int amount) {
+        if (amount < 1) {
+            p.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return false;
+        }
         AttributeInstance h = p.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
         if (h.getBaseValue() + amount > UltraLS.config.plugin.maxHP) {
             p.sendMessage(Text.prefix("&cInsufficient Space. &7You would go over the maximum health. (&e%s&7)"
                     .formatted(UltraLS.config.plugin.maxHP)
             ));
-            return;
+            return false;
         }
 
         h.setBaseValue(h.getBaseValue() + amount);
@@ -149,14 +175,19 @@ public class BankFunctions {
         p.sendMessage(Text.prefix("Deposited &c%s&7 hearts into your health bar."
                 .formatted(amount)
         ));
+        return true;
     }
 
-    public static void addToBank(Player p, int amount) {
+    public static boolean addToBank(Player p, int amount) {
+        if (amount < 1) {
+            p.sendMessage(Text.prefix("Data validation error. Input value above 0"));
+            return false;
+        }
         if (UltraLS.bank.balances.get(p.getUniqueId().toString()) + amount > UltraLS.config.bank.maxBalance) {
             p.sendMessage(Text.prefix("&cInsufficient Space. &7You would go over the maximum balance. (&e%s&7)"
                     .formatted(UltraLS.config.bank.maxBalance)
             ));
-            return;
+            return false;
         }
 
         UltraLS.bank.balances.put(p.getUniqueId().toString(), UltraLS.bank.balances.get(p.getUniqueId().toString()) + amount);
@@ -165,5 +196,6 @@ public class BankFunctions {
         p.sendMessage(Text.prefix("Deposited &c%s&7 hearts into your heart bank. Your new balance is &c%s&7."
                 .formatted(amount,UltraLS.bank.balances.get(p.getUniqueId().toString()))
         ));
+        return true;
     }
 }

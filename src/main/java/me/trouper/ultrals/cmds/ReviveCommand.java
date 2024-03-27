@@ -3,6 +3,7 @@ package me.trouper.ultrals.cmds;
 import io.github.itzispyder.pdk.commands.Args;
 import io.github.itzispyder.pdk.commands.CommandRegistry;
 import io.github.itzispyder.pdk.commands.CustomCommand;
+import io.github.itzispyder.pdk.commands.Permission;
 import io.github.itzispyder.pdk.commands.completions.CompletionBuilder;
 import io.github.itzispyder.pdk.utils.ServerUtils;
 import me.trouper.ultrals.UltraLS;
@@ -18,7 +19,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandRegistry(value = "revive")
+@CommandRegistry(value = "revive",permission = @Permission("ultrals.revive"),printStackTrace = true)
 public class ReviveCommand implements CustomCommand {
     @Override
     public void dispatchCommand(CommandSender commandSender, Args args) {

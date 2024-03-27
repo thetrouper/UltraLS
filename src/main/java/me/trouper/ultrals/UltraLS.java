@@ -59,6 +59,7 @@ public final class UltraLS extends JavaPlugin {
         new WithdrawCommand().register();
         new ReviveCommand().register();
         new DepositCommand().register();
+        new BankCommand().register();
 
         // Events
         new DeathEvent().register();
