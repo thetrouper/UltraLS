@@ -3,6 +3,7 @@ package me.trouper.ultrals.cmds;
 import io.github.itzispyder.pdk.commands.Args;
 import io.github.itzispyder.pdk.commands.CommandRegistry;
 import io.github.itzispyder.pdk.commands.CustomCommand;
+import io.github.itzispyder.pdk.commands.Permission;
 import io.github.itzispyder.pdk.commands.completions.CompletionBuilder;
 import io.github.itzispyder.pdk.utils.ServerUtils;
 import me.trouper.ultrals.server.functions.DeathFunctions;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-@CommandRegistry(value = "giveheart",printStackTrace = true)
+@CommandRegistry(value = "giveheart",permission = @Permission(value = "ultrals.giveheart"),printStackTrace = true)
 public class GiveHeartCommand implements CustomCommand {
     @Override
     public void dispatchCommand(CommandSender sender, Args args) {

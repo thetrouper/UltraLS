@@ -3,12 +3,14 @@ package me.trouper.ultrals.cmds;
 import io.github.itzispyder.pdk.commands.Args;
 import io.github.itzispyder.pdk.commands.CommandRegistry;
 import io.github.itzispyder.pdk.commands.CustomCommand;
+import io.github.itzispyder.pdk.commands.Permission;
 import io.github.itzispyder.pdk.commands.completions.CompletionBuilder;
 import me.trouper.ultrals.server.functions.BankFunctions;
+import me.trouper.ultrals.server.util.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandRegistry(value = "deposit",printStackTrace = true)
+@CommandRegistry(value = "deposit", permission = @Permission(value = "ultrals.deposit"),printStackTrace = true)
 public class DepositCommand implements CustomCommand {
     @Override
     public void dispatchCommand(CommandSender sender, Args args) {

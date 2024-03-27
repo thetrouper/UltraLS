@@ -2,6 +2,7 @@ package me.trouper.ultrals.server.functions;
 
 import me.trouper.ultrals.UltraLS;
 import me.trouper.ultrals.server.util.Text;
+import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.entity.Player;
@@ -9,6 +10,10 @@ import org.bukkit.entity.Player;
 public class TransferFunctions {
 
     public static void bankToBank(Player s, Player r, int amount) {
+        if (amount < 1) {
+            s.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
         int sb = UltraLS.bank.balances.get(s.getUniqueId().toString());
         int rb = UltraLS.bank.balances.get(r.getUniqueId().toString());
 
@@ -37,6 +42,10 @@ public class TransferFunctions {
     }
 
     public static void bankToBar(Player s, Player r, int amount) {
+        if (amount < 1) {
+            s.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
         int sb = UltraLS.bank.balances.get(s.getUniqueId().toString());
         AttributeInstance ra = r.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
@@ -66,6 +75,10 @@ public class TransferFunctions {
     }
 
     public static void barToBank(Player s, Player r, int amount) {
+        if (amount < 1) {
+            s.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
         int rb = UltraLS.bank.balances.get(r.getUniqueId().toString());
         AttributeInstance sa = s.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
@@ -95,6 +108,10 @@ public class TransferFunctions {
     }
 
     public static void barToBar(Player s, Player r, int amount) {
+        if (amount < 1) {
+            s.sendMessage(Text.prefix("&cData validation error. Input value above 0"));
+            return;
+        }
         AttributeInstance ra = r.getAttribute(Attribute.GENERIC_MAX_HEALTH);
         AttributeInstance sa = s.getAttribute(Attribute.GENERIC_MAX_HEALTH);
 
@@ -104,7 +121,7 @@ public class TransferFunctions {
         }
 
         if (ra.getBaseValue() + amount > UltraLS.config.plugin.maxHP) {
-            s.sendMessage(Text.prefix("&cCould not give &e%s&7 hearts! Their health bar would overflow.".formatted(r.getName())));
+            s.sendMessage(Text  .prefix("&cCould not give &e%s&7 hearts! Their health bar would overflow.".formatted(r.getName())));
             r.sendMessage(Text.prefix("&e%s&7 tried to give &c%s&7 hearts to you, but your health bar was full!".formatted(s.getName(),amount)));
             return;
         }

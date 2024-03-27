@@ -9,7 +9,21 @@ permissions:
   ultrals.admin:
     default: op
     description: Access to give and take hearts from players
-
+  ultrals.deposit:
+    default: op
+    description: access to the command to place hearts from bar into bank
+  ultrals.withdraw:
+    default: op
+    description: allows withdrawing hearts to bar or item
+  ultrals.revive:
+    default: op
+    description: allows player to revive for a cost
+  ultrals.giveheart:
+    default: op
+    description: allows player to transfer hearts
+  ultrals.bal:
+    default: op
+    description: Allow viewing of balance
 commands:
   ultrals:
     description: Admin command to edit people's hearts
@@ -40,3 +54,7 @@ commands:
     description: Revive a player for the cost of a player death
     permission: ultrals.revive
     usage: /revive <dead player>
+  bank:
+    description: View your balance
+    permission: ultrals.bal
+    usage: /bank
