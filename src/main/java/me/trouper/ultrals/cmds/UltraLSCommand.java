@@ -17,13 +17,11 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-@CommandRegistry(value = "ultrals", permission = @Permission("ultrals.admin"), printStackTrace = true)
+@CommandRegistry(value = "ultrals", permission = @Permission("ultrals.admin"), printStackTrace = true, playersOnly = false)
 public class UltraLSCommand implements CustomCommand {
 
     @Override
     public void dispatchCommand(CommandSender sender, Args args) {
-        Player p = (Player) sender;
-
         switch (args.get(0).toString()) {
             case "hearts" -> {
                 OfflinePlayer target = Bukkit.getOfflinePlayer(args.get(1).toString());
@@ -31,7 +29,7 @@ public class UltraLSCommand implements CustomCommand {
                 switch (args.get(2).toString()) {
                     case "add" -> {
                         if (!target.isConnected()) {
-                            p.sendMessage(Text.prefix("&cNull Error. &7Target is not online."));
+                            sender.sendMessage(Text.prefix("&cNull Error. &7Target is not online."));
                             return;
                         }
                         int amount = args.get(3).toInt();
@@ -39,7 +37,7 @@ public class UltraLSCommand implements CustomCommand {
                     }
                     case "subtract" -> {
                         if (!target.isConnected()) {
-                            p.sendMessage(Text.prefix("&cNull Error. &7Target is not online."));
+                            sender.sendMessage(Text.prefix("&cNull Error. &7Target is not online."));
                             return;
                         }
                         int amount = args.get(3).toInt();
@@ -57,7 +55,7 @@ public class UltraLSCommand implements CustomCommand {
                             case "bar" -> {
                                 int amount = args.get(4).toInt();
                                 if (!target.isConnected()) {
-                                    p.sendMessage(Text.prefix("&cNull Error. &7Target is not online."));
+                                    sender.sendMessage(Text.prefix("&cNull Error. &7Target is not online."));
                                     return;
                                 }
                                 AdminFunctions.setHearts(sender,target.getPlayer(),amount,args.get(5).toBool());
@@ -71,7 +69,7 @@ public class UltraLSCommand implements CustomCommand {
                     case "debug" -> {
                         UltraLS.config.debugMode = !UltraLS.config.debugMode;
                         UltraLS.config.save();
-                        p.sendMessage(Text.prefix("Debug mode is now &a%s&7.".formatted(UltraLS.config.debugMode)));
+                        sender.sendMessage(Text.prefix("Debug mode is now &a%s&7.".formatted(UltraLS.config.debugMode)));
                     }
                 }
             }
